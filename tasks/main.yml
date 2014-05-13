@@ -12,6 +12,10 @@
   tags: ['config']
   notify: selenium_reload
 
+- name: Create selenium wrapper
+  template: src=selenium_.j2 dest=/home/vagrant/selenium_ owner=vagrant group=vagrant mode=754
+  tags: ['config']
+
 - name: Install init script
   template: src=init.j2 dest=/etc/init.d/selenium_{{sel_role}} owner=root group=root mode=755
   tags: ['config']

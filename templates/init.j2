@@ -93,15 +93,22 @@ start)
     if [ ! -z "${PORT}" ]; then
         JAR_ARGS="${JAR_ARGS} -port ${PORT}"
     fi
+ 
+    #sets up log files
+    if [ ! -d /var/log/${NAME} ]; then
+       mkdir /var/log/${NAME}
+       touch /var/log/${NAME}/${NAME}.log
+       chown -R ${SE_USER} /var/log/${NAME} 
+    fi
 
     start-stop-daemon   --start \
                         --background \
                         --pidfile "${SE_PID}" \
                         --make-pidfile \
+                        --chuid "${SE_USER}" \
                         --user "${SE_USER}" \
                         --group "${SE_GROUP}" \
-                        --exec ${JAVA_HOME}/bin/java -- ${JAVA_OPTS} -jar /usr/local/lib/{{jar_file}} ${JAR_ARGS} ${EXTRA_ARGS}  2>&1 \
-        | logger -t "${NAME}"
+                        --startas /home/vagrant/selenium_
 ;;
 stop)
     log_daemon_msg "Stopping ${DESC}" "${NAME}"
@@ -121,7 +128,7 @@ stop)
     fi
 ;;
 status)
-   start-stop-daemon --status --pidfile "${SE_PID}" --name ${NAME}
+   start-stop-daemon --status --pidfile "${SE_PID}" --user  ${SE_USER}
    rc=$?
    case $rc in
       0) msg="$NAME is running with pid: $( cat ${SE_PID})." ;;

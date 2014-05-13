@@ -3,7 +3,7 @@ download_url: http://selenium.googlecode.com/files/{{jar_file}}
 jar_file: selenium-server-standalone-{{server_version}}.jar
 server_version: 2.39.0
 
-sel_role: standalone
+sel_role: ''
 
 hub: ''
 java_opts: ''
