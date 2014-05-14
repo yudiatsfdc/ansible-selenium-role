@@ -16,6 +16,11 @@
   template: src=selenium_.j2 dest=/home/vagrant/selenium_ owner=vagrant group=vagrant mode=754
   tags: ['config']
 
+- name: Install Xvfb init script
+  template: src=xvfb_initd.j2 dest=/etc/init.d/xvfb owner=root group=root mode=755
+  tags: ['config']
+  notify: xvfb_started
+
 - name: Install init script
   template: src=init.j2 dest=/etc/init.d/selenium_{{sel_role}} owner=root group=root mode=755
   tags: ['config']

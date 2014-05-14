@@ -5,3 +5,6 @@
 
 - name: selenium_reload
   service: name=selenium_{{sel_role}} state=reloaded
+
+- name: xvfb_started
+  service: name=xvfb state=started enabled=yes
