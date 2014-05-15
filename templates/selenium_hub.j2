@@ -1,0 +1,4 @@
+#!/bin/sh
+NAME=selenium_hub
+export DISPLAY=:99
+exec /usr/lib/jvm/java-7-oracle/jre/bin/java -jar /usr/local/lib/selenium-server-standalone-2.39.0.jar -role hub >/var/log/${NAME}/${NAME}.log 2>&1 &

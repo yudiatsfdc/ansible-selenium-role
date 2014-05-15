@@ -10,10 +10,18 @@
 - name: Install Config
   template: src=defaults.j2 dest=/etc/default/selenium_{{sel_role}} owner=root group=root mode=644
   tags: ['config']
-  notify: selenium_reload
+#  notify: selenium_reload
 
-- name: Create selenium wrapper
+- name: Create selenium standalone wrapper
   template: src=selenium_.j2 dest=/home/vagrant/selenium_ owner=vagrant group=vagrant mode=754
+  tags: ['config']
+
+- name: Create selenium hub wrapper
+  template: src=selenium_hub.j2 dest=/home/vagrant/selenium_hub owner=vagrant group=vagrant mode=754
+  tags: ['config']
+
+- name: Create selenium node wrapper
+  template: src=selenium_node.j2 dest=/home/vagrant/selenium_node owner=vagrant group=vagrant mode=754
   tags: ['config']
 
 - name: Install Xvfb init script

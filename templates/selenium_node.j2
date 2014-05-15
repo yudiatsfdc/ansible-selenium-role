@@ -1,0 +1,4 @@
+#!/bin/sh
+NAME=selenium_node
+export DISPLAY=:99
+exec /usr/lib/jvm/java-7-oracle/jre/bin/java -jar /usr/local/lib/selenium-server-standalone-2.39.0.jar  -role node -hub http://192.168.50.2:4444/grid/register >/var/log/${NAME}/${NAME}.log 2>&1 &

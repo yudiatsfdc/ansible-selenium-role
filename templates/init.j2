@@ -107,7 +107,7 @@ start)
                         --chuid "${SE_USER}" \
                         --user "${SE_USER}" \
                         --group "${SE_GROUP}" \
-                        --startas /home/vagrant/selenium_
+                        --startas /home/vagrant/${NAME}
 ;;
 stop)
     log_daemon_msg "Stopping ${DESC}" "${NAME}"
