@@ -10,7 +10,7 @@
 #                    placed in /etc/init.d.
 ### END INIT INFO
 
-# Author: Yudi Nagatat <ynagata@salesfoce.com>
+# Author: Yudi Nagata <ynagata@salesfoce.com>
 #
 # Please remove the "Author" lines above and replace them
 # with your own name if you copy and modify this script.
@@ -20,8 +20,8 @@
 # PATH should only include /usr/* if it runs after the mountnfs.sh script
 PATH=/sbin:/usr/sbin:/bin:/usr/bin
 DESC="Description of the service"
-NAME="Xvfb"
-DAEMON=/usr/bin/$NAME
+NAME="xvfb"
+DAEMON=/usr/bin/Xvfb
 DAEMON_ARGS=":99"
 PIDFILE=/var/run/$NAME.pid
 SCRIPTNAME=/etc/init.d/$NAME

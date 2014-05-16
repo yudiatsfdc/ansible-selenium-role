@@ -10,21 +10,17 @@
 - name: Install Config
   template: src=defaults.j2 dest=/etc/default/selenium_{{sel_role}} owner=root group=root mode=644
   tags: ['config']
-  notify: selenium_reload
-
-- name: Create selenium wrapper
-  template: src=selenium_.j2 dest=/home/vagrant/selenium_ owner=vagrant group=vagrant mode=754
-  tags: ['config']
 
 - name: Install Xvfb init script
   template: src=xvfb_initd.j2 dest=/etc/init.d/xvfb owner=root group=root mode=755
   tags: ['config']
-  notify: xvfb_started
 
 - name: Install init script
-  template: src=init.j2 dest=/etc/init.d/selenium_{{sel_role}} owner=root group=root mode=755
+  template: src=selenium.init.j2 dest=/etc/init.d/selenium_{{sel_role}} owner=root group=root mode=755
   tags: ['config']
-  notify: selenium_started
+
+- name: selenium_started
+  service: name=selenium_{{sel_role}} state=started 
 
 - name: Install browser
   apt: name={{item}}
@@ -32,3 +28,8 @@
   with_items:
     - xvfb
     - firefox
+
+- name: xvfb_started
+  service: name=xvfb state=started 
+  when: sel_role != 'hub'
+

@@ -48,7 +48,7 @@ fi
 SE_USER=${SE_USER:-"nobody"}
 SE_GROUP=${SE_GROUP:-"nogroup"}
 JAR_ARGS=${JAR_ARGS:-""}
-JAVA_OPTS=${JAVA_OPTS:-""}
+JAVA_OPTS=${JAVA_OPTS:-"-server"}
 
 
 SYSTEM_JAVA=$(/usr/sbin/update-alternatives --query java|grep Value|cut -f 2 -d":")
@@ -93,21 +93,22 @@ start)
     if [ ! -z "${PORT}" ]; then
         JAR_ARGS="${JAR_ARGS} -port ${PORT}"
     fi
- 
+
     #sets up log files
     if [ ! -d /var/log/${NAME} ]; then
        mkdir /var/log/${NAME}
        touch /var/log/${NAME}/${NAME}.log
        chown -R ${SE_USER} /var/log/${NAME} 
     fi
+    EXTRA_ARGS="${EXTRA_ARGS} >/var/log/${NAME}/${NAME}.log 2>&1"
 
     start-stop-daemon   --start \
+                        --background \
                         --pidfile "${SE_PID}" \
                         --make-pidfile \
                         --chuid "${SE_USER}" \
-                        --user "${SE_USER}" \
                         --group "${SE_GROUP}" \
-                        --startas /home/vagrant/selenium_
+                        --startas /bin/bash -- -c "DISPLAY=:99 exec ${JAVA_HOME}/bin/java  ${JAVA_OPTS} -jar /usr/local/lib/{{jar_file}} ${JAR_ARGS} ${EXTRA_ARGS}"
 ;;
 stop)
     log_daemon_msg "Stopping ${DESC}" "${NAME}"
@@ -127,7 +128,7 @@ stop)
     fi
 ;;
 status)
-   start-stop-daemon --status --pidfile "${SE_PID}" --user  ${SE_USER}
+   start-stop-daemon --status --pidfile "${SE_PID}" --user ${SE_USER}
    rc=$?
    case $rc in
       0) msg="$NAME is running with pid: $( cat ${SE_PID})." ;;
