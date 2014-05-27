@@ -13,5 +13,3 @@ galaxy_info:
   categories:
     - system
     - web
-dependencies:
-    - briancoca.oracle_java7

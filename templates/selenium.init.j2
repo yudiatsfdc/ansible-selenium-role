@@ -108,7 +108,7 @@ start)
                         --make-pidfile \
                         --chuid "${SE_USER}" \
                         --group "${SE_GROUP}" \
-                        --startas /bin/bash -- -c "DISPLAY=:99 exec ${JAVA_HOME}/bin/java  ${JAVA_OPTS} -jar /usr/local/lib/{{jar_file}} ${JAR_ARGS} ${EXTRA_ARGS}"
+                        --startas /bin/bash -- -c "DISPLAY=:99 exec ${JAVA_HOME}/bin/java  ${JAVA_OPTS} -jar {{jar_location}}{{jar_file}} ${JAR_ARGS} ${EXTRA_ARGS}"
 ;;
 stop)
     log_daemon_msg "Stopping ${DESC}" "${NAME}"
